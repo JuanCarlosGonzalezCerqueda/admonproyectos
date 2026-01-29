@@ -1,38 +1,148 @@
+.root {
+  /* Light theme with dark/black text */
+  --bg-start: #ffffff;
+  --bg-mid: #f7fafc;
+  --bg-end: #eef2f6;
+  --card-bg: rgba(15,23,42,0.03);
+  --muted: rgba(2,6,23,0.65);
+  --accent: #0ea5a4; /* teal */
+  --accent-2: #06b6d4; /* cyan */
+  --glass: rgba(2,6,23,0.04);
+  --shadow: 0 6px 20px rgba(2,6,23,0.06);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 40%, var(--bg-end) 100%);
+  color: #0b0b0b; /* global dark/black font */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 18px;
+  padding: 28px 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-header h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  letter-spacing: -0.5px;
+  color: #0b1221;
 }
+
+/* Primary navigation */
+#menpri {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+#menpri ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+}
+
+#menpri a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 160ms ease;
+  font-weight: 600;
+}
+
+#menpri a:hover {
+  background: linear-gradient(180deg, rgba(2,6,23,0.03), rgba(2,6,23,0.01));
+  color: #071029;
+  transform: translateY(-2px);
+}
+
+/* Secondary menu container (#mens) */
+#mens {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 30px rgba(2,6,23,0.06);
+  color: var(--muted);
+}
+
+#mens ul { display:flex; gap: 10px; margin:0; padding:0; list-style:none; }
+#mens li a { color:var(--muted); text-decoration:none; padding:6px 10px; border-radius:8px }
+#mens li a:hover { background:var(--glass); color:#fff }
+
+main {
+  width: 100%;
+  max-width: 1100px;
+}
+
+#contenido {
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,247,250,0.9));
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+  min-height: 280px;
+  color: #0b0b0b;
+}
+
+/* Form rows */
+.form-row { display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
+.form-row label { font-size:0.9rem; color:var(--muted); }
+.form-row input[type="text"], .form-row input[type="number"], .form-row textarea, select {
+  background: #ffffff;
+  border: 1px solid rgba(2,6,23,0.06);
+  color: #071029;
+  padding: 8px 10px;
+  border-radius: 8px;
+  outline: none;
+  transition: box-shadow 120ms ease, transform 120ms ease;
+}
+.form-row input:focus, .form-row textarea:focus, select:focus { box-shadow: 0 6px 18px rgba(103,216,220,0.06); transform: translateY(-1px) }
+
+.form-row button, button { cursor:pointer; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; color: #ffffff; padding: 8px 14px; border-radius: 10px; font-weight:700; box-shadow: 0 8px 18px rgba(6,22,24,0.08); }
+.form-row button[disabled], button[disabled] { opacity:0.6; cursor: not-allowed }
+
+/* Tables */
+.tabla-proyectos table, .tabla-tareas table, .tabla-usuarios table, .tabla-eliminar table { width:100%; border-collapse: collapse; color: #0b0b0b }
+.tabla-proyectos th, .tabla-proyectos td, .tabla-tareas th, .tabla-tareas td, .tabla-usuarios th, .tabla-usuarios td, .tabla-eliminar th, .tabla-eliminar td { padding:10px; text-align:left; border-bottom: 1px solid rgba(2,6,23,0.06) }
+.tabla-proyectos thead th { background: rgba(2,6,23,0.03); font-weight:700 }
+.tabla-proyectos tbody tr:hover { background: rgba(2,6,23,0.02) }
+
+.btn-eliminar-proy { background: linear-gradient(90deg,#ff7a7a,#ff4d4d); color: white; padding: 6px 10px; border-radius:8px; border:none }
+.btn-eliminar-tar { background: linear-gradient(90deg,#ff7a7a,#ff4d4d); color: white; padding: 6px 10px; border-radius:8px; border:none }
+.btn-eliminar-usr { background: linear-gradient(90deg,#ff7a7a,#ff4d4d); color: white; padding: 6px 10px; border-radius:8px; border:none }
+.submit { background: linear-gradient(90deg,#ff7a7a,#ff4d4d); color: white; padding: 6px 10px; border-radius:8px; border:none }
+/* Small screens */
+@media (max-width: 700px) {
+  .App-header { flex-direction: column; align-items: flex-start }
+  #menpri ul { flex-wrap:wrap }
+  #contenido { padding: 12px }
+}
+
+/* subtle utility */
+.muted { color: var(--muted) }
+
