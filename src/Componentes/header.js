@@ -1,7 +1,5 @@
 import React from "react";
-import { menuproyectos } from "./funciones";
-import { mentar } from "./funciones";
-import { menus } from "./funciones";
+import { menuproyectos, mentar, menus } from "./funciones";
 
 function Header() {
   return (

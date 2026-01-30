@@ -6,16 +6,12 @@ export function menuproyectos(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const container = document.getElementById('mens');
     if (!container) return;
-    // Limpiar contenido previo
     container.innerHTML = '';
-    // Construir menú usando DOM (evita inyectar strings con handlers como texto)
     const ul = document.createElement('ul');
-    // `proy` contiene elementos React como <ul><li><a .../></li>...</ul>
     proy.forEach((item) => {
         const children = (item && item.props && item.props.children) || [];
         const lis = Array.isArray(children) ? children : [children];
         lis.forEach((li) => {
-            // El anchor es normalmente li.props.children
             const anchorReact = (li && li.props && li.props.children) || null;
             const a = document.createElement('a');
             let href = '#';
@@ -31,14 +27,11 @@ export function menuproyectos(e) {
             a.href = href;
             a.textContent = typeof text === 'string' ? text : String(text);
             if (typeof onClick === 'function') {
-                // Vincular el handler real de React (función) al elemento DOM
                 a.addEventListener('click', function (ev) {
                     ev.preventDefault();
                     try {
                         onClick(ev);
                     } catch (err) {
-                        // Evitar romper el menú si el handler falla
-                        // eslint-disable-next-line no-console
                         console.error('Error en handler de menú:', err);
                     }
                 });
@@ -54,16 +47,12 @@ export function mentar(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const container = document.getElementById('mens');
     if (!container) return;
-    // Limpiar contenido previo
     container.innerHTML = '';
-    // Construir menú usando DOM (evita inyectar strings con handlers como texto)
     const ul = document.createElement('ul');
-    // `tar` contiene elementos React como <ul><li><a .../></li>...</ul>
-    tar.forEach((item) => {
+     tar.forEach((item) => {
         const children = (item && item.props && item.props.children) || [];
         const lis = Array.isArray(children) ? children : [children];
         lis.forEach((li) => {
-            // El anchor es normalmente li.props.children
             const anchorReact = (li && li.props && li.props.children) || null;
             const a = document.createElement('a');
             let href = '#';
@@ -79,14 +68,11 @@ export function mentar(e) {
             a.href = href;
             a.textContent = typeof text === 'string' ? text : String(text);
             if (typeof onClick === 'function') {
-                // Vincular el handler real de React (función) al elemento DOM
                 a.addEventListener('click', function (ev) {
                     ev.preventDefault();
                     try {
                         onClick(ev);
                     } catch (err) {
-                        // Evitar romper el menú si el handler falla
-                        // eslint-disable-next-line no-console
                         console.error('Error en handler de menú:', err);
                     }
                 });
@@ -102,16 +88,12 @@ export function menus(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const container = document.getElementById('mens');
     if (!container) return;
-    // Limpiar contenido previo
     container.innerHTML = '';
-    // Construir menú usando DOM (evita inyectar strings con handlers como texto)
     const ul = document.createElement('ul');
-    // `usr` contiene elementos React como <ul><li><a .../></li>...</ul>
     usr.forEach((item) => {
         const children = (item && item.props && item.props.children) || [];
         const lis = Array.isArray(children) ? children : [children];
         lis.forEach((li) => {
-            // El anchor es normalmente li.props.children
             const anchorReact = (li && li.props && li.props.children) || null;
             const a = document.createElement('a');
             let href = '#';
@@ -127,14 +109,11 @@ export function menus(e) {
             a.href = href;
             a.textContent = typeof text === 'string' ? text : String(text);
             if (typeof onClick === 'function') {
-                // Vincular el handler real de React (función) al elemento DOM
                 a.addEventListener('click', function (ev) {
                     ev.preventDefault();
                     try {
                         onClick(ev);
                     } catch (err) {
-                        // Evitar romper el menú si el handler falla
-                        // eslint-disable-next-line no-console
                         console.error('Error en handler de menú:', err);
                     }
                 });
@@ -196,7 +175,6 @@ export function mostar(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const container = document.getElementById('contenido');
     if (!container) return;
-    // Petición al servidor y renderizado simple de resultados
     axios.get('http://localhost:3001/tareas')
         .then(response => {
             const tareas = response.data || [];
@@ -204,7 +182,6 @@ export function mostar(e) {
                 container.innerHTML = '<h2>Tareas</h2><p>No hay tareas disponibles.</p>';
                 return;
             }
-            // Construir una tabla dinámica con todas las propiedades encontradas
             const keysSet = new Set();
             tareas.forEach(p => Object.keys(p || {}).forEach(k => keysSet.add(k)));
             const headers = Array.from(keysSet);
@@ -214,7 +191,6 @@ export function mostar(e) {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-
             const html = ['<h2>Tareas</h2>'];
             html.push('<div class="tabla-tareas"><table border="1" cellpadding="6" cellspacing="0"><thead><tr>');
             headers.forEach(h => html.push(`<th>${escapeHtml(h)}</th>`));
@@ -223,7 +199,6 @@ export function mostar(e) {
                 html.push('<tr>');
                 headers.forEach(h => {
                     const val = p && Object.prototype.hasOwnProperty.call(p, h) ? p[h] : '';
-                    // Mostrar objetos/arrays como JSON
                     const cell = (val !== null && typeof val === 'object') ? JSON.stringify(val) : String(val);
                     html.push(`<td>${escapeHtml(cell)}</td>`);
                 });
@@ -233,7 +208,6 @@ export function mostar(e) {
             container.innerHTML = html.join('');
         })
         .catch(error => {
-            // eslint-disable-next-line no-console
             console.error('Error al obtener tareas:', error);
             container.innerHTML = '<h2>Tareas</h2><p>Error al cargar tareas.</p>';
         });
@@ -242,7 +216,6 @@ export function mosusr(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const container = document.getElementById('contenido');
     if (!container) return;
-    // Petición al servidor y renderizado simple de resultados
     axios.get('http://localhost:3001/usuarios')
         .then(response => {
             const usuarios = response.data || [];
@@ -250,7 +223,6 @@ export function mosusr(e) {
                 container.innerHTML = '<h2>Usuarios</h2><p>No hay usuarios disponibles.</p>';
                 return;
             }
-            // Construir una tabla dinámica con todas las propiedades encontradas
             const keysSet = new Set();
             usuarios.forEach(p => Object.keys(p || {}).forEach(k => keysSet.add(k)));
             const headers = Array.from(keysSet);
@@ -260,7 +232,6 @@ export function mosusr(e) {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-
             const html = ['<h2>Usuarios</h2>'];
             html.push('<div class="tabla-usuarios"><table border="1" cellpadding="6" cellspacing="0"><thead><tr>');
             headers.forEach(h => html.push(`<th>${escapeHtml(h)}</th>`));
@@ -269,7 +240,6 @@ export function mosusr(e) {
                 html.push('<tr>');
                 headers.forEach(h => {
                     const val = p && Object.prototype.hasOwnProperty.call(p, h) ? p[h] : '';
-                    // Mostrar objetos/arrays como JSON
                     const cell = (val !== null && typeof val === 'object') ? JSON.stringify(val) : String(val);
                     html.push(`<td>${escapeHtml(cell)}</td>`);
                 });
@@ -279,7 +249,6 @@ export function mosusr(e) {
             container.innerHTML = html.join('');
         })
         .catch(error => {
-            // eslint-disable-next-line no-console
             console.error('Error al obtener usuarios:', error);
             container.innerHTML = '<h2>Usuarios</h2><p>Error al cargar usuarios.</p>';
         });
@@ -288,7 +257,6 @@ export function crepro(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const container = document.getElementById('contenido');
     if (!container) return;
-    // Formulario con 3 campos y botón Guardar
     container.innerHTML = `
         <h2>Crear Proyecto</h2>
         <form id="form-crepro">
@@ -319,7 +287,6 @@ export function crepro(e) {
         const nombre = document.getElementById('crepro-nombre').value.trim();
         const descripcion = document.getElementById('crepro-descripcion').value.trim();
         const destimados = document.getElementById('crepro-destimados').value.trim();
-        // Validación mínima
         if (!nombre) {
             mensaje.innerText = 'El nombre es requerido.';
             return;
@@ -329,16 +296,13 @@ export function crepro(e) {
         axios.post('http://localhost:3001/proyectos', payload)
             .then(res => {
                 mensaje.innerText = 'Proyecto creado correctamente.';
-                // refrescar la lista de proyectos llamando a mospro si existe
                 try {
                     if (typeof mospro === 'function') mospro();
                 } catch (err) {
-                    // eslint-disable-next-line no-console
                     console.error('No se pudo refrescar la lista:', err);
                 }
             })
             .catch(err => {
-                // eslint-disable-next-line no-console
                 console.error('Error al crear proyecto:', err);
                 mensaje.innerText = 'Error al crear proyecto.';
             });
@@ -348,7 +312,6 @@ export function cretar(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const container = document.getElementById('contenido');
     if (!container) return;
-    // Formulario con 3 campos y botón Guardar
     container.innerHTML = `
         <h2>Crear Tarea</h2>
         <form id="form-cretar">
@@ -374,7 +337,6 @@ export function cretar(e) {
             <div id="cretar-mensaje" style="margin-top:10px;"></div>
         </form>
     `;
-
     const form = document.getElementById('form-cretar');
     const mensaje = document.getElementById('cretar-mensaje');
     if (!form) return;
@@ -384,7 +346,6 @@ export function cretar(e) {
         const descripcion = document.getElementById('cretar-descripcion').value.trim();
         const destimados = document.getElementById('cretar-destimados').value.trim();
         const idpro = document.getElementById('cretar-idpro').value.trim();
-        // Validación mínima
         if (!nombre) {
             mensaje.innerText = 'El nombre es requerido.';
             return;
@@ -394,16 +355,13 @@ export function cretar(e) {
         axios.post('http://localhost:3001/tareas', payload)
             .then(res => {
                 mensaje.innerText = 'tarea creada correctamente.';
-                // refrescar la lista de tarjetas llamando a mostar si existe
                 try {
                     if (typeof mostar === 'function') mostar();
                 } catch (err) {
-                    // eslint-disable-next-line no-console
                     console.error('No se pudo refrescar la lista:', err);
                 }
             })
             .catch(err => {
-                // eslint-disable-next-line no-console
                 console.error('Error al crear tarea:', err);
                 mensaje.innerText = 'Error al crear tarea.';
             });
@@ -413,7 +371,6 @@ export function creusr(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     const container = document.getElementById('contenido');
     if (!container) return;
-    // Formulario con 3 campos y botón Guardar
     container.innerHTML = `
         <h2>Crear Usuario</h2>
         <form id="form-creusr">
@@ -435,7 +392,6 @@ export function creusr(e) {
             <div id="creusr-mensaje" style="margin-top:10px;"></div>
         </form>
     `;
-
     const form = document.getElementById('form-creusr');
     const mensaje = document.getElementById('creusr-mensaje');
     if (!form) return;
@@ -444,7 +400,6 @@ export function creusr(e) {
         const nombre = document.getElementById('creusr-nombre').value.trim();
         const apaterno = document.getElementById('creusr-apaterno').value.trim();
         const amaterno = document.getElementById('creusr-amaterno').value.trim();
-        // Validación mínima
         if (!nombre) {
             mensaje.innerText = 'El nombre es requerido.';
             return;
@@ -454,16 +409,13 @@ export function creusr(e) {
         axios.post('http://localhost:3001/usuarios', payload)
             .then(res => {
                 mensaje.innerText = 'Usuario creado correctamente.';
-                // refrescar la lista de usuarios llamando a mosusr si existe
                 try {
                     if (typeof mosusr === 'function') mosusr();
                 } catch (err) {
-                    // eslint-disable-next-line no-console
                     console.error('No se pudo refrescar la lista:', err);
                 }
             })
             .catch(err => {
-                // eslint-disable-next-line no-console
                 console.error('Error al crear usuario:', err);
                 mensaje.innerText = 'Error al crear usuario.';
             });
@@ -487,13 +439,11 @@ export function updpro(e) {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-
             const options = proyectos.map(p => {
                 const id = p.id || p._id || p.codigo || p.idProyecto || '';
                 const label = p.nombre || p.titulo || p.name || id || 'Proyecto';
                 return `<option value="${escapeHtml(String(id))}">${escapeHtml(String(label))}</option>`;
             }).join('');
-
             const html = [];
             html.push('<h2>Actualizar Proyecto</h2>');
             html.push('<div class="select-proyecto">');
@@ -502,7 +452,6 @@ export function updpro(e) {
             html.push(options);
             html.push('</select>');
             html.push('</div>');
-
             html.push(`
                 <form id="form-updpro" style="margin-top:12px; display:none;">
                     <div class="form-row">
@@ -523,13 +472,10 @@ export function updpro(e) {
                     <div id="updpro-mensaje" style="margin-top:10px;"></div>
                 </form>
             `);
-
             container.innerHTML = html.join('');
-
             const select = document.getElementById('updpro-select');
             const form = document.getElementById('form-updpro');
             const mensaje = document.getElementById('updpro-mensaje');
-
             select.addEventListener('change', function () {
                 const val = select.value;
                 if (!val) {
@@ -551,7 +497,6 @@ export function updpro(e) {
                 mensaje.innerText = '';
                 form.style.display = 'block';
             });
-
             form.addEventListener('submit', function (ev) {
                 ev.preventDefault();
                 const id = select.value;
@@ -603,13 +548,11 @@ export function updtar(e) {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-
             const options = tareas.map(p => {
                 const id = p.id || p._id || p.codigo || p.idTarea || '';
                 const label = p.nombre || p.titulo || p.name || id || 'tarea';
                 return `<option value="${escapeHtml(String(id))}">${escapeHtml(String(label))}</option>`;
             }).join('');
-
             const html = [];
             html.push('<h2>Actualizar Tarea</h2>');
             html.push('<div class="select-tarea">');
@@ -618,7 +561,6 @@ export function updtar(e) {
             html.push(options);
             html.push('</select>');
             html.push('</div>');
-
             html.push(`
                 <form id="form-updtar" style="margin-top:12px; display:none;">
                     <div class="form-row">
@@ -643,13 +585,10 @@ export function updtar(e) {
                     <div id="updtar-mensaje" style="margin-top:10px;"></div>
                 </form>
             `);
-
             container.innerHTML = html.join('');
-
             const select = document.getElementById('updtar-select');
             const form = document.getElementById('form-updtar');
             const mensaje = document.getElementById('updtar-mensaje');
-
             select.addEventListener('change', function () {
                 const val = select.value;
                 if (!val) {
@@ -673,7 +612,6 @@ export function updtar(e) {
                 mensaje.innerText = '';
                 form.style.display = 'block';
             });
-
             form.addEventListener('submit', function (ev) {
                 ev.preventDefault();
                 const id = select.value;
@@ -726,13 +664,11 @@ export function updusr(e) {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-
             const options = usuarios.map(p => {
                 const id = p.id || p._id || p.codigo || p.idTarea || '';
                 const label = p.nombre || p.titulo || p.name || id || 'usuario';
                 return `<option value="${escapeHtml(String(id))}">${escapeHtml(String(label))}</option>`;
             }).join('');
-
             const html = [];
             html.push('<h2>Actualizar Usuario</h2>');
             html.push('<div class="select-usuario">');
@@ -741,7 +677,6 @@ export function updusr(e) {
             html.push(options);
             html.push('</select>');
             html.push('</div>');
-
             html.push(`
                 <form id="form-updusr" style="margin-top:12px; display:none;">
                     <div class="form-row">
@@ -762,13 +697,10 @@ export function updusr(e) {
                     <div id="updusr-mensaje" style="margin-top:10px;"></div>
                 </form>
             `);
-
             container.innerHTML = html.join('');
-
             const select = document.getElementById('updusr-select');
             const form = document.getElementById('form-updusr');
             const mensaje = document.getElementById('updusr-mensaje');
-
             select.addEventListener('change', function () {
                 const val = select.value;
                 if (!val) {
@@ -790,7 +722,6 @@ export function updusr(e) {
                 mensaje.innerText = '';
                 form.style.display = 'block';
             }); 
-
             form.addEventListener('submit', function (ev) {
                 ev.preventDefault();
                 const id = select.value;
@@ -842,8 +773,6 @@ export function elipro(e) {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-
-            // construir tabla con botón eliminar por fila
             const keysSet = new Set();
             proyectos.forEach(p => Object.keys(p || {}).forEach(k => keysSet.add(k)));
             const headers = Array.from(keysSet);
@@ -866,8 +795,6 @@ export function elipro(e) {
             });
             html.push('</tbody></table></div>');
             container.innerHTML = html.join('');
-
-            // añadir listeners a botones eliminar
             const buttons = container.querySelectorAll('.btn-eliminar-proy');
             buttons.forEach(btn => {
                 btn.addEventListener('click', function () {
@@ -875,17 +802,14 @@ export function elipro(e) {
                     if (!id) return;
                     const confirmed = window.confirm('¿Eliminar proyecto con id ' + id + '? Esta acción no se puede deshacer.');
                     if (!confirmed) return;
-                    // mostrar indicación
                     btn.disabled = true;
                     btn.textContent = 'Eliminando...';
                     const url = `http://localhost:3001/proyectos/${encodeURIComponent(id)}`;
                     axios.delete(url)
                         .then(() => {
-                            // refrescar la lista
                             elipro();
                         })
                         .catch(err => {
-                            // eslint-disable-next-line no-console
                             console.error('Error al eliminar proyecto:', err);
                             btn.disabled = false;
                             btn.textContent = 'Eliminar';
@@ -899,7 +823,6 @@ export function elipro(e) {
             });
         })
         .catch(err => {
-            // eslint-disable-next-line no-console
             console.error('Error al cargar proyectos para eliminar:', err);
             container.innerHTML = '<h2>Eliminar Proyecto</h2><p>Error al cargar proyectos.</p>';
         });
@@ -922,8 +845,6 @@ export function elitar(e) {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-
-            // construir tabla con botón eliminar por fila
             const keysSet = new Set();
             tareas.forEach(p => Object.keys(p || {}).forEach(k => keysSet.add(k)));
             const headers = Array.from(keysSet);
@@ -946,8 +867,6 @@ export function elitar(e) {
             });
             html.push('</tbody></table></div>');
             container.innerHTML = html.join('');
-
-            // añadir listeners a botones eliminar
             const buttons = container.querySelectorAll('.btn-eliminar-tar');
             buttons.forEach(btn => {
                 btn.addEventListener('click', function () {
@@ -955,17 +874,14 @@ export function elitar(e) {
                     if (!id) return;
                     const confirmed = window.confirm('¿Eliminar tarea con id ' + id + '? Esta acción no se puede deshacer.');
                     if (!confirmed) return;
-                    // mostrar indicación
                     btn.disabled = true;
                     btn.textContent = 'Eliminando...';
                     const url = `http://localhost:3001/tareas/${encodeURIComponent(id)}`;
                     axios.delete(url)
                         .then(() => {
-                            // refrescar la lista
                             elitar();
                         })
                         .catch(err => {
-                            // eslint-disable-next-line no-console
                             console.error('Error al eliminar tarea:', err);
                             btn.disabled = false;
                             btn.textContent = 'Eliminar';
@@ -979,7 +895,6 @@ export function elitar(e) {
             });
         })
         .catch(err => {
-            // eslint-disable-next-line no-console
             console.error('Error al cargar tareas para eliminar:', err);
             container.innerHTML = '<h2>Eliminar Tarea</h2><p>Error al cargar tareas.</p>';
         });
@@ -1002,8 +917,6 @@ export function eliusr(e) {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-
-            // construir tabla con botón eliminar por fila
             const keysSet = new Set();
             usuarios.forEach(p => Object.keys(p || {}).forEach(k => keysSet.add(k)));
             const headers = Array.from(keysSet);
@@ -1026,8 +939,6 @@ export function eliusr(e) {
             });
             html.push('</tbody></table></div>');
             container.innerHTML = html.join('');
-
-            // añadir listeners a botones eliminar
             const buttons = container.querySelectorAll('.btn-eliminar-usr');
             buttons.forEach(btn => {
                 btn.addEventListener('click', function () {
@@ -1035,17 +946,14 @@ export function eliusr(e) {
                     if (!id) return;
                     const confirmed = window.confirm('¿Eliminar usuario con id ' + id + '? Esta acción no se puede deshacer.');
                     if (!confirmed) return;
-                    // mostrar indicación
                     btn.disabled = true;
                     btn.textContent = 'Eliminando...';
                     const url = `http://localhost:3001/usuarios/${encodeURIComponent(id)}`;
                     axios.delete(url)
                         .then(() => {
-                            // refrescar la lista
                             eliusr();
                         })
                         .catch(err => {
-                            // eslint-disable-next-line no-console
                             console.error('Error al eliminar usuario:', err);
                             btn.disabled = false;
                             btn.textContent = 'Eliminar';
@@ -1059,7 +967,6 @@ export function eliusr(e) {
             });
         })
         .catch(err => {
-            // eslint-disable-next-line no-console
             console.error('Error al cargar usuarios para eliminar:', err);
             container.innerHTML = '<h2>Eliminar Usuario</h2><p>Error al cargar usuarios.</p>';
         });
