@@ -11,7 +11,7 @@ function Header() {
             <ul>
                 <li><a href="#" onClick={menuproyectos}>Proyectos</a></li>
                 <li><a href="#tareas" onClick={mentar}>Tareas</a></li>
-                <li><a href="#usuarios" onClick={menus}>Usuarios</a></li>
+                <li><a href="#usuarios" onClick={menus}>Usuarios</a></li> 
             </ul>
         </nav>
     </header>
